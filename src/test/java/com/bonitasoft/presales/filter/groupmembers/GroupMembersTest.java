@@ -1,6 +1,6 @@
-package com.bonitasoft.filter.group.member;
+package com.bonitasoft.presales.filter.groupmembers;
 
-import static com.bonitasoft.filter.group.members.GroupMembers.GROUP_PATH_INPUT;
+import static com.bonitasoft.presales.filter.groupmembers.GroupMembers.GROUP_PATH_INPUT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.bonitasoft.filter.group.members.GroupMembers;
 import org.bonitasoft.engine.api.APIAccessor;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.connector.ConnectorValidationException;
@@ -17,7 +16,6 @@ import org.bonitasoft.engine.identity.Group;
 import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,26 +27,20 @@ class GroupMembersTest {
 
   @InjectMocks private GroupMembers filter;
 
-  @Mock(lenient = true)
+  @Mock
   private APIAccessor apiAccessor;
 
-  @Mock(lenient = true)
+  @Mock
   private IdentityAPI identityAPI;
 
-  @Mock(lenient = true)
+  @Mock
   private Group group;
 
-  @Mock SearchOptions option;
   @Mock SearchResult<User> results;
 
   @Mock User userA;
 
   @Mock User userB;
-
-  @BeforeEach
-  void setUp() {
-    when(apiAccessor.getIdentityAPI()).thenReturn(identityAPI);
-  }
 
   @Test
   public void should_throw_exception_if_mandatory_input_is_missing() {
@@ -74,6 +66,7 @@ class GroupMembersTest {
   @Test
   public void should_return_a_list_of_candidates() throws Exception {
     // Given
+    when(apiAccessor.getIdentityAPI()).thenReturn(identityAPI);
     when(identityAPI.getGroupByPath("/acme")).thenReturn(group);
     when(identityAPI.searchUsers(any(SearchOptions.class))).thenReturn(results);
     when(results.getResult()).thenReturn(List.of(userA, userB));

@@ -1,8 +1,7 @@
-package com.bonitasoft.filter.group.members;
+package com.bonitasoft.presales.filter.groupmembers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.bonitasoft.engine.api.APIAccessor;
 import org.bonitasoft.engine.api.IdentityAPI;
@@ -16,10 +15,12 @@ import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.engine.identity.UserSearchDescriptor;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GroupMembers extends AbstractUserFilter {
 
-  private static final Logger LOGGER = Logger.getLogger(GroupMembers.class.getName());
+  private static final Logger LOGGER = LoggerFactory.getLogger(GroupMembers.class.getName());
 
   public static final String GROUP_PATH_INPUT = "groupPath";
   public static final int MAX_RESULTS = 100;
@@ -33,7 +34,6 @@ public class GroupMembers extends AbstractUserFilter {
   @Override
   public void validateInputParameters() throws ConnectorValidationException {
     validateStringInputParameterIsNotNulOrEmpty(GROUP_PATH_INPUT);
-
   }
 
   /**
@@ -51,11 +51,13 @@ public class GroupMembers extends AbstractUserFilter {
     IdentityAPI identityAPI = apiAccessor.getIdentityAPI();
     try {
       Group group = getGroup(identityAPI, groupPath);
-      final int currentIndex = startIndex;
+      int currentIndex = startIndex;
       long added = addResults(currentIndex, identityAPI, group, userIds);
       while (added == MAX_RESULTS) {
+        currentIndex += MAX_RESULTS;
         added = addResults(currentIndex, identityAPI, group, userIds);
       }
+      LOGGER.info("found {} users in group {}",userIds.size(),group.getDisplayName());
       return userIds;
     } catch (GroupNotFoundException | SearchException e) {
       throw new UserFilterException(e);
@@ -72,6 +74,7 @@ public class GroupMembers extends AbstractUserFilter {
         searchResult.getResult().stream()
             .map(
                 user -> {
+                  LOGGER.debug("adding user {} - {}",user.getUserName(),user.getId());
                   return user.getId();
                 })
             .collect(Collectors.toList()));
@@ -79,7 +82,6 @@ public class GroupMembers extends AbstractUserFilter {
   }
 
   Group getGroup(IdentityAPI identityAPI, String groupPath) throws GroupNotFoundException {
-    Group group = identityAPI.getGroupByPath(groupPath);
-    return group;
+    return identityAPI.getGroupByPath(groupPath);
   }
 }
