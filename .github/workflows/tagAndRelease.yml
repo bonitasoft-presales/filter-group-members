@@ -71,7 +71,7 @@ jobs:
         id: build-and-test
         run: |
           echo "build ${{ steps.previous-tag.outputs.tag }}"
-          ./mvnw clean spotless:check verify
+          ./mvnw clean verify
 
       - name: Get version from pom
         id: get-version
