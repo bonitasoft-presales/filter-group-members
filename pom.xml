@@ -2,7 +2,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.bonitasoft.example</groupId>
+    <groupId>com.bonitasoft.filter</groupId>
     <artifactId>groupMembersFilter</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>groupMembersFilter</name>
@@ -19,10 +19,10 @@
         <definition-version>1.0.0</definition-version>
         <impl-id>${definition-id}-impl</impl-id>
         <impl-version>${project.version}</impl-version>
-        <impl-main-class>com.bonitasoft.example.GroupMembers</impl-main-class>
+        <impl-main-class>com.bonitasoft.filter.group.members.GroupMembers</impl-main-class>
 
         <!-- Bonita -->
-        <bonita-runtime.version>7.15.0</bonita-runtime.version>
+        <bonita-runtime.version>7.15.1</bonita-runtime.version>
 
         <!-- Tests -->
         <junit-jupiter-engine.version>5.9.2</junit-jupiter-engine.version>
