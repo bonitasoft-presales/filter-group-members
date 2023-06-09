@@ -3,7 +3,7 @@
 
     <groupId>com.bonitasoft.presales.filter</groupId>
     <artifactId>filter-group-members</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <name>Group Members Filter</name>
     <packaging>jar</packaging>
 
@@ -172,7 +172,7 @@
         <url>https://github.com/${github.owner}/${github.repo}</url>
         <developerConnection>scm:git:${project.scm.url}.git</developerConnection>
         <connection>scm:git:${project.scm.url}.git</connection>
-        <tag>HEAD</tag>
+        <tag>filter-group-members-1.1</tag>
     </scm>
     <distributionManagement>
         <snapshotRepository>
