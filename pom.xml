@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.bonitasoft.presales.filter</groupId>
@@ -7,7 +7,7 @@
     <version>1.0-SNAPSHOT</version>
     <name>Group Members Filter</name>
     <packaging>jar</packaging>
-    
+
     <properties>
         <!-- Maven -->
         <java.version>11</java.version>
@@ -37,6 +37,11 @@
         <groovy-maven-plugin.version>2.1.1</groovy-maven-plugin.version>
         <groovy-xml.version>3.0.14</groovy-xml.version>
         <maven-surefire-plugin.version>3.0.0-M8</maven-surefire-plugin.version>
+
+        <!-- git hub packages-->
+        <github.owner>bonitasoft-presales</github.owner>
+        <github.repo>api-bdm-queries-common</github.repo>
+        <project.scm.id>${project.artifactId}</project.scm.id>
     </properties>
 
     <dependencyManagement>
@@ -86,9 +91,9 @@
         </dependency>
 
     </dependencies>
-    
+
     <build>
-    	<defaultGoal>package</defaultGoal>
+        <defaultGoal>package</defaultGoal>
         <resources>
             <resource>
                 <directory>src/main/resources-filtered</directory>
@@ -99,7 +104,7 @@
                 <filtering>false</filtering>
             </resource>
         </resources>
-       <pluginManagement>
+        <pluginManagement>
             <plugins>
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
@@ -162,6 +167,24 @@
                 <artifactId>maven-assembly-plugin</artifactId>
             </plugin>
         </plugins>
+
     </build>
- 
+    <scm>
+        <url>https://github.com/${github.owner}/${github.repo}</url>
+        <developerConnection>scm:git:${project.scm.url}.git</developerConnection>
+        <connection>scm:git:${project.scm.url}.git</connection>
+        <tag>HEAD</tag>
+    </scm>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>github</id>
+            <name>Github Package</name>
+            <url>https://maven.pkg.github.com/${github.owner}/${github.repo}</url>
+        </snapshotRepository>
+        <repository>
+            <id>github</id>
+            <name>Github Package</name>
+            <url>https://maven.pkg.github.com/${github.owner}/${github.repo}</url>
+        </repository>
+    </distributionManagement>
 </project>
