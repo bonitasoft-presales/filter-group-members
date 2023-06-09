@@ -40,7 +40,7 @@
 
         <!-- git hub packages-->
         <github.owner>bonitasoft-presales</github.owner>
-        <github.repo>api-bdm-queries-common</github.repo>
+        <github.repo>${project.artifactId}</github.repo>
         <project.scm.id>${project.artifactId}</project.scm.id>
     </properties>
 
